@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Ember Marimedia Example</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+
+   <script type="text/x-handlebars" data-template-name="application">
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Ember Marimedia Example</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li>{{#linkTo 'login'}}Login{{/linkTo}}</li>  
+           <li>{{#linkTo 'index'}}Tasks{{/linkTo}}</li>    
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+	{{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="index">
+
+    <div class="container">
+
+    <div class="starter-template"> 
+     <div>
+     <h2>User: {{ userName }}</h2>
+     </div>
+
+    <div class="panel panel-default">
+  <div class="panel-body">
+  
+    <form {{action loadList on="submit"}} >
+        {{view Ember.TextField valueBinding="title" id="title" placeholder="Title" required="true"}}
+        {{view Ember.TextField valueBinding="description" id="description" placeholder="Description" required="true"}}
+        {{view Ember.TextField valueBinding="date" id="date" placeholder="Date" required="true"}}
+        <button type="submit">Add!</button>
+        <br />
+        {{ ERR }}
+    </form>
+
+  </div>
+  <div class="panel-footer">
+
+  <ul class="list-group">
+    {{#each tasks in model}}
+        <li {{bindAttr rel=tasks.index}}  class="list-group-item" isChecked='No'>     
+          {{tasks.index}}. {{input type='checkbox' change=status index=tasks.index}}
+          <a target="_blank">{{tasks.title}}</a> , {{tasks.description}} , {{tasks.date}}
+        </li>
+    {{/each}}
+    </ul>
+
+   </div>
+    </div>
+  
+    </div>
+    </div><!-- /.container -->
+
+</script>
+
+<script type="text/x-handlebars" data-template-name="login">
+
+ <div class="container">
+    <div class="starter-template">
+    <h2>Login</h2>
+     <form {{action loadList on="submit"}}>
+        {{view Ember.TextField valueBinding="username" id="username" placeholder="Title" required="true"}}
+        {{view Ember.TextField valueBinding="password" id="password" placeholder="Password" required="true"}}
+        <button type="submit">Login</button>
+    </form>
+      </div>
+    </div><!-- /.container -->
+
+</script>
+
+
+  <script src="js/libs/jquery-1.9.1.js"></script>
+  <script src="js/libs/handlebars-1.0.0-rc.4.js"></script>
+  <script src="js/libs/ember-1.0.0-rc.6.js"></script>
+  <script src="js/libs/bootstrap.min.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
