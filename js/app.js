@@ -10,7 +10,8 @@ App.Router.map( function() {
 //default route. just add a simple task to the list.
 App.IndexRoute = Ember.Route.extend({
 	model: function() {
-		return App.MariMedia.addTask('default title','default description', 'default date');
+		//return App.MariMedia.addTask('default title','default description', 'default date');
+		return App.MariMedia.getTask(); // get Tasks from DB
 	}
 });
 
@@ -76,9 +77,23 @@ App.MariMedia = Ember.Object.extend({
 
 App.MariMedia.reopenClass({
 
-	addTask: function(title,description,date) {
+	addTask: function(title,description,date) 
+	{
 		tasks.pushObject(App.MariMedia.create({title:title,description:description,date:date})); 
 	  	return tasks;		
+	},
+
+	getTask: function() 
+	{
+			$.getJSON("http://localhost/marimedia/api.php").then(function(response) {
+				console.log(response.success);
+				if(response.success){
+					$.each(response.data, function(index, task) {
+    			 			tasks.pushObject(App.MariMedia.create({title:task.title,description:task.description,date:task.date})); 
+   				 	});	
+				}
+			});	
+		return tasks;
 	}
 
 });
